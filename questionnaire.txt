@@ -1,0 +1,47 @@
+MUMT301-2021 Assignment 1
+QUESTIONNAIRE!
+
+The following questionnaire seeks to understand your previous knowledge about some of the concepts that we will learn in class during the coming term.
+
+1. Do you know any programming languages? If you do, which ones?
+
+Python, Java, C/C++, C#, SQL, Bash, PowerShell, and OCaml.
+
+2. What is your primary computer operating system (OS)?
+
+Windows
+
+3. Do you own a smartphone, tablet, or mobile device? What is your favourite OS for mobile devices?
+
+Smartphone and my favorite OS would be Android because it most resembles a computer OS with an obvious filesystem in the UI.
+
+4. Do you use any social networking services? If you do, which ones? Why?
+
+Yes: Instagram, YouTube and Whatsapp. Instagram because it is a way to post pictures of your life to close friends. I grew up with YouTube and having some cool entertainment is always nice. Whatsapp because most people I know use it so it's good to contact people.
+
+5. Expand the following acronyms and do research about their meaning. You may look them up if you don't know:
+
+    HTTP: Hypertext Transfer Protocol. It is a protocol for sending text, video, images, and other media across the internet.
+    REST: Representational State Transfer. A software architecture to guide the development of web applications to simplify scalability, encourage component design, reduce latency and enforce security. 
+    API: Application Programming Interface. A set of tools that is used to allow computer programs to communicate with each other. Tools include a set of packages, software design, and computer architecture.
+
+6. Do you play a musical instrument or sing? If so, how much experience do you have?
+
+I play bass, guitar, keyboards, saxophone, and I sing. I have most experience in bass and guitar playing since the fifth grade, then saxophone, vocals, and then keyboards.
+
+7. Can you read music notation? If so, how well?
+
+Yes, fairly well in both treble and bass clef. I can sight read in both clefs.
+
+8. How large is your personal music collection? Estimate the number of artists, albums, and songs. If instead you listen to music using streaming services, how many playlists, artists, albums, and songs do you have in your account?
+
+I use streaming service for listening to music and I have 88 albums saved that I listen to a lot, and over 30 playlists from genres from classical, hip, arab music, and jazz.
+
+9. How do you search and find new music? How do you think this affects the types of artists that you end up listening to?
+
+I avoid major label advertising, including Spotify curated playlists. I'll usually find playlists from artists I respect and then go from there.
+
+10. Name two musical artists that you like. What do you find interesting about their music that makes you like them?
+
+Quincy Jones: His impact on music including introducing jazz to popular culture is seldom remembered. All the artists I love were curated by him.
+Steely Dan: They are talented, eccentric, and always went to the logical extent of their genres. 
