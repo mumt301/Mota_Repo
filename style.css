@@ -1,0 +1,9 @@
+body {background-color: lightblue;}
+a:link {color:darkgoldenrod;}
+a:visited {color:rebeccapurple}
+.Assignments {background-color: bisque;
+    padding:12px;
+} 
+.Repos {background-color: lightcoral;
+    padding:12px;
+} 
