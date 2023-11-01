@@ -50,7 +50,7 @@ function generate_results() {
 
                 let releaseList = xmlDoc.querySelectorAll("release-group");
                 let table = createResultTable(releaseList);
-                document.appendChild(table);
+                document.body.appendChild(table);
             })
             .catch(error => {
                 console.error(error);
