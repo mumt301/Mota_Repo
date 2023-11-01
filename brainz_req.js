@@ -50,12 +50,12 @@ function generate_results() {
 
                 let releaseList = xmlDoc.querySelectorAll("release-group");
                 let table = createResultTable(releaseList);
-                placeholder.appendChild(table);
+                document.appendChild(table);
             })
             .catch(error => {
                 console.error(error);
                 // Display an error message to the user
-                placeholder.innerHTML = "An error occurred while fetching artist information.";
+                document.innerHTML = "An error occurred while fetching artist information.";
             });
     }
 }
