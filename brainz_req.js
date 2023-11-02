@@ -12,51 +12,45 @@ function generate_results() {
         let queryURL = `https://musicbrainz.org/ws/2/artist?query=${artist}&limit=1`;
         console.log(queryURL);
 
-        // 1. Making the query using fetch
-        fetch(queryURL)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                return response.text();
-            })
-            .then(data => {
-                // 2. Data parsing
-                let parser = new DOMParser();
-                let xmlDoc = parser.parseFromString(data, "application/xml");
+        // 1. Making the query using AJAX
+        let xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("GET", queryURL, true);
+        xmlHttp.send();
 
-                let artistNode = xmlDoc.querySelector("artist");
-                if (artistNode) {
-                    let id = artistNode.getAttribute("id");
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState == 4) {
+                if (xmlHttp.status == 200) {
+                    // 2. Data parsing
+                    let data = xmlHttp.responseXML;
+                    let id = data.querySelector("artist").getAttribute("id");
                     console.log(id);
                     let releaseUrl = `https://musicbrainz.org/ws/2/artist/${id}?inc=release-groups`;
 
-                    // Fetch the release data
-                    return fetch(releaseUrl);
-                } else {
-                    throw new Error("Artist not found.");
-                }
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                return response.text();
-            })
-            .then(data => {
-                // 3. Data parsing for release data
-                let parser = new DOMParser();
-                let xmlDoc = parser.parseFromString(data, "application/xml");
+                    // Making a second AJAX request for release data
+                    let releaseRequest = new XMLHttpRequest();
+                    releaseRequest.open("GET", releaseUrl, true);
+                    releaseRequest.send();
 
-                let releaseList = xmlDoc.querySelectorAll("release-group");
-                let table = createResultTable(releaseList);
-                document.body.appendChild(table);
-            })
-            .catch(error => {
-                console.error(error);
-                // Display an error message to the user
-                document.innerHTML = "An error occurred while fetching artist information.";
-            });
+                    releaseRequest.onreadystatechange = function () {
+                        if (releaseRequest.readyState == 4) {
+                            if (releaseRequest.status == 200) {
+                                // 3. Data parsing for release data
+                                let releaseData = releaseRequest.responseXML;
+                                let releaseList = releaseData.querySelectorAll("release-group");
+                                let table = createResultTable(releaseList);
+                                document.body.appendChild(table);
+                            } else {
+                                console.error("Failed to fetch release data");
+                                // Handle error here
+                            }
+                        }
+                    };
+                } else {
+                    console.error("Failed to fetch artist data");
+                    // Handle error here
+                }
+            }
+        };
     }
 }
 
@@ -68,7 +62,7 @@ function createResultTable(releaseList) {
     let cell = row.insertCell(0);
     cell.innerHTML = "<b>Release</b>";
     cell = row.insertCell(1);
-    cell.innerHTML = "<b>Release Date</b";
+    cell.innerHTML = "<b>Release Date</b>";
 
     for (let release of releaseList) {
         let releaseTitle = release.querySelector("title").textContent;
