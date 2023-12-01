@@ -13,6 +13,14 @@
     <script src="11-auxiliary-functions.js" type="text/JavaScript"></script>
 </head>
 
+<!--
+    Write a html button that makes a sound when clicked and makes the sound stop when the button is released using the
+    pizzicato.js library.
+-->
+
+
+
+
 <body>
     <h1>An online <span id="thereminLogo">Theremin</span> instrument</h1>
     <p>The theremin is an electronic musical instrument invented by <a
@@ -25,5 +33,11 @@
         the browser.</p>
     <div id="thereminZone"></div>
 </body>
+
+<form>
+    <input type="sound" id="sineWave" name="waveform" value="sine" checked><label for="sine">Sine Wave</label><br>
+    <input type="sound" id="triangleWave" name="waveform" value="triangle"><label for="triangle">Triangle Wave</label><br>
+    <input type="submit" value="Submit">
+</form>
 
 </html>
