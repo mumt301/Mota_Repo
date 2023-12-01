@@ -17,6 +17,12 @@ function thereminControl(e, oscillator, theremin) {
     let thereminFreq = minFrequency + (x / theremin.clientWidth) * freqRange;
     let thereminVolume = 1.0 - (y / theremin.clientHeight);
 
+    let closeFreq = midiToFrequency(Math.round(frequencyToMidi(thereminFreq)));
+    if (document.getElementById("auto-tune").checked)
+    {
+        thereminFreq = closeFreq;
+    }
+
     console.log("Frequency: ", thereminFreq);
     oscillator.frequency = thereminFreq;
     console.log("Volume: ", thereminVolume);
