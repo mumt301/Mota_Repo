@@ -1,11 +1,10 @@
 "use strict";
 
-// Turn theremin on
+// Theremin control functions
 function thereminOn(oscillator) {
     oscillator.play();
 }
 
-// Control the theremin
 function thereminControl(e, oscillator, theremin) {
     let x = e.offsetX;
     let y = e.offsetY;
@@ -14,52 +13,97 @@ function thereminControl(e, oscillator, theremin) {
     let minFrequency = 220.0;
     let maxFrequency = 880.0;
     let freqRange = maxFrequency - minFrequency;
+
     let thereminFreq = minFrequency + (x / theremin.clientWidth) * freqRange;
     let thereminVolume = 1.0 - (y / theremin.clientHeight);
 
-    let closeFreq = midiToFrequency(Math.round(frequencyToMidi(thereminFreq)));
-    if (document.getElementById("autotune").checked)
+    if (document.getElementById("pFifth").checked) 
     {
-        thereminFreq = closeFreq;
+        thereminVolume /= 2;
     }
 
+    let roundedFreq = midiToFrequency(Math.round(frequencyToMidi(thereminFreq)));
+
+    if (document.getElementById("autotune").checked) 
+    {
+        thereminFreq = roundedFreq;
+    }
+
+    let dispFreq = Math.round(thereminFreq * 100) / 100;
+    let noteName = noteFromFrequency(thereminFreq);
+
     console.log("Frequency: ", thereminFreq);
-    oscillator.frequency = thereminFreq;
     console.log("Volume: ", thereminVolume);
+    oscillator.frequency = thereminFreq;
+    oscillator.volume = thereminVolume;
+
+    document.getElementById("dispFreq").innerHTML = `Frequency: ${dispFreq}`;
+    document.getElementById("noteName").innerHTML = `Note: ${noteName}`;
+}
+
+function thereminFifth(e, oscillator, theremin) {
+    let x = e.offsetX;
+    let y = e.offsetY;
+    console.log(x, y);
+
+    let minFrequency = 220.0;
+    let maxFrequency = 880.0;
+    let freqRange = maxFrequency - minFrequency;
+
+    let thereminFreq = minFrequency + (x / theremin.clientWidth) * freqRange;
+    thereminFreq = interval(thereminFreq, 7);
+    let thereminVolume = (1.0 - (y / theremin.clientHeight)) / 2;
+    let roundedFreq = midiToFrequency(Math.round(frequencyToMidi(thereminFreq)));
+
+    if (document.getElementById("autotune").checked) 
+    {
+        thereminFreq = roundedFreq;
+    }
+
+    console.log("Frequency fifth: ", thereminFreq);
+    console.log("Volume fifth: ", thereminVolume);
+    oscillator.frequency = thereminFreq;
     oscillator.volume = thereminVolume;
 }
 
-// Turn theremin off
 function thereminOff(oscillator) {
     oscillator.stop();
 }
 
+// Initialize theremin on page load
 function runAfterLoadingPage() {
-    // Instantiate a sine wave with pizzicato.js
-    const oscillator = new Pizzicato.Sound({
-        source: 'wave',
-        options: {
-            type: "sine",
-            frequency: 220
-        }
-    });
+    let waveform = "sine";
+    let urlParameters = new URL(document.location).searchParams;
 
-    // Get the theremin div from the html
+    if (urlParameters.has('waveform')) 
+    {
+        waveform = urlParameters.get('waveform');
+    }
+
+    document.getElementById(waveform).checked = true;
+
+    const oscillator = createThereminSound(waveform);
+    const oscFifth = createThereminSound(waveform);
+
     const theremin = document.getElementById("thereminZone");
 
-    // Theremin plays when the mouse enters the theremin div
     theremin.addEventListener("mouseenter", function () {
         thereminOn(oscillator);
+        if (document.getElementById("pFifth").checked) 
+        {
+            thereminOn(oscFifth);
+        }
+        console.log("Theremin is ON");
     });
 
-    // Theremin is controlled while the mouse is inside the theremin div
     theremin.addEventListener("mousemove", function (e) {
         thereminControl(e, oscillator, theremin);
+        thereminFifth(e, oscFifth, theremin);
     });
 
-    // Theremin stops when the mouse leaves the theremin div
     theremin.addEventListener("mouseleave", function () {
         thereminOff(oscillator);
+        thereminOff(oscFifth);
     });
 }
 
